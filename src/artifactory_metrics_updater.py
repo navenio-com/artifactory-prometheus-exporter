@@ -1,10 +1,10 @@
-from artifactory_api_client import ArtifactoyApiClient
+from artifactory_api_client import ArtifactoryApiClient
 from artifactory_metrics import ArtifactoryMetrics
 import datetime
 
 
 class ArtifactoryMetricsUpdater:
-    def __init__(self, api_client: ArtifactoyApiClient):
+    def __init__(self, api_client: ArtifactoryApiClient):
         self.__api_client = api_client
         self.__search_minutes_intervals = [1, 5, 60]
 

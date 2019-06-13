@@ -10,7 +10,7 @@ from prometheus_client import start_http_server
 from app_options import AppOptions
 from artifactory_metrics import ArtifactoryMetrics
 from artifactory_options import ArtifactoryOptions
-from artifactory_api_client import ArtifactoyApiClient
+from artifactory_api_client import ArtifactoryApiClient
 from artifactory_metrics_updater import ArtifactoryMetricsUpdater
 
 parameters = configargparse.ArgParser()
@@ -41,7 +41,7 @@ artifactory_metrics = ArtifactoryMetrics()
 artifactory_options = ArtifactoryOptions(options.artifactory_url,
                                          options.artifactory_user,
                                          options.artifactory_password)
-artifactory_api_client = ArtifactoyApiClient(artifactory_options)
+artifactory_api_client = ArtifactoryApiClient(artifactory_options)
 artifactory_metrics_updater = ArtifactoryMetricsUpdater(artifactory_api_client)
 
 

@@ -5,7 +5,7 @@ from datetime import datetime
 from artifactory_options import ArtifactoryOptions
 
 
-class ArtifactoyApiClient:
+class ArtifactoryApiClient:
     def __init__(self, options: ArtifactoryOptions):
         self.__options = options
 
@@ -28,10 +28,24 @@ class ArtifactoyApiClient:
     def license(self):
         licenses = self.__request('/system/licenses')[0]
 
-        now = datetime.now()
-        expiry = datetime.strptime(licenses['validThrough'], '%b %d, %Y')
+        return self.handle_licenses(licenses)
 
-        return (expiry - now).days, licenses['validThrough']
+    def handle_licenses(self, licenses):
+        valid_through = licenses['validThrough']
+        if self.is_expected_time_format(valid_through):
+            now = datetime.now()
+            expiry = datetime.strptime(valid_through, '%b %d, %Y')
+            return (expiry - now).days, valid_through
+        else:
+            return 100, valid_through
+
+    @staticmethod
+    def is_expected_time_format(date_text):
+        try:
+            datetime.strptime(date_text, '%b %d, %Y')
+            return True
+        except ValueError:
+            return False
 
     def version(self):
         version = self.__request('/system/version')[0]
